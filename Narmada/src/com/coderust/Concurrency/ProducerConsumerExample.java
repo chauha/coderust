@@ -2,6 +2,18 @@ package com.coderust.Concurrency;
 
 import java.util.LinkedList;
 
+enum SingeltonInstance{
+    INSTANCE;
+
+    int value;
+    public int getValue(){
+        return value;
+    }
+
+}
+
+
+
 public class ProducerConsumerExample {
 
     public static void main(String[] args) {

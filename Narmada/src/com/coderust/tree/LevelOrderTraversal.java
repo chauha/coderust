@@ -7,6 +7,8 @@ public class LevelOrderTraversal {
     static HashMap<Integer, ArrayList<Integer>> levels = new HashMap<>();
     static int max_height = 0;
     static HashMap<Integer, Integer> max_breadth = new HashMap<>();
+    static int minLevel=Integer.MAX_VALUE;
+    static int maxLevel=Integer.MIN_VALUE;
 
     public void levelTraverse(Node root, int level) {
         if (root == null) {
@@ -50,6 +52,31 @@ public class LevelOrderTraversal {
         return max_height;
     }
 
+    static void is_perfectly_balanced(Node root, int level){
+        if (root == null){
+            return ;
+        }
+        if (root.left == null && root.right == null){
+            if ( level < minLevel){
+                minLevel=level;
+            }
+            else if  (level > maxLevel){
+                maxLevel=level;
+            }
+         }
+
+         is_perfectly_balanced(root.left,level+1);
+        is_perfectly_balanced(root.right,level+1);
+
+
+    }
+
+
+    static boolean isBalanced(Node root){
+        is_perfectly_balanced(root,0);
+        return ( (maxLevel - minLevel) <= 1 ) ;
+    }
+
     static int find_Max_Width(Node root) {
         find_Height(root, 0);
         int width = 0;
@@ -67,15 +94,17 @@ public class LevelOrderTraversal {
         root.left = new Node(12);
         root.right = new Node(20);
         root.left.right = new Node(14);
-        root.left.left = new Node(11);
-        root.right.left = new Node(16);
-        root.right.right = new Node(24);
-        root.right.right.left = new Node(15);
+        root.left.right.left = new Node(1);
+//        root.left.left = new Node(11);
+//        root.right.left = new Node(16);
+//        root.right.right = new Node(24);
+//        root.right.right.left = new Node(15);
         LevelOrderTraversal lvlTraverse = new LevelOrderTraversal();
         lvlTraverse.levelTraverse(root, 0);
         //   printLevels();
         //  System.out.println(find_Height(root, 0));
-        System.out.println(find_Max_Width(root));
+       // System.out.println(find_Max_Width(root));
+        System.out.println(isBalanced(root));
     }
 
 
